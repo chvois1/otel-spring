@@ -1,0 +1,23 @@
+server:
+  port: 8080
+services:
+  user:
+    url: localhost:8080
+  email:
+    url: localhost:8082
+
+kafka:
+  bootstrap: kafka:9092
+  topic: reports
+  group: emails
+spring:
+  application:
+    name: email-service
+  sleuth:
+    otel:
+      config:
+        trace-id-ratio-based: 1.0
+      exporter:
+        otlp:
+          endpoint: http://sleuth:4317
+
