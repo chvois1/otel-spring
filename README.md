@@ -18,7 +18,7 @@ Le traçage identifie de manière unique toute requête émise dans un système 
 Les trois composants du traçage sont le Span, le SpanContext et la Trace.
 
 - Le span est le principal élément constitutif d'une trace distribuée. Il représentant une unité de travail individuelle effectuée dans un système distribué.
-- Le SpanContext transporte les données au-delà des limites du processus. 
+- Le SpanContext transporte les données au-delà des limites du processus.
 - la trace est une collection de Spans avec la même racine.
 
 ## Cas d'usage
@@ -32,8 +32,7 @@ On distingue 3 types de services:
 - un service de reporting qui  expose une API HTTP au service utilisateur  et qui utilise un producteur Kafka pour créer des événements.
 - un service de messagerie qui consomme les événements kafka produits par le services de reproting.
 
-L'objectif est de suivre toute demande émise dans le système: depuis le service utilisateur jusqu'au service de messagerie. L'architecture est simplifiée: les  avantages deviennent bien plus importants lorsque le monbre des services impliqués dans un scaénrio augmante. 
-
+L'objectif est de suivre toute demande émise dans le système: depuis le service utilisateur jusqu'au service de messagerie. L'architecture est simplifiée: les  avantages deviennent bien plus importants lorsque le monbre des services impliqués dans un scénario augmante.
 
 L'infrastructure est la suivante:
 
@@ -56,7 +55,7 @@ récepteurs -> traitement -> exporteur
 
 ## Résultats
 
-Pour analyser les logs et les traces, il est possible de consulter la sortie standard de l'application elle-même. La sortie du journal dans le service d’application affichera traceId et spanId. 
+Pour analyser les logs et les traces, il est possible de consulter la sortie standard de l'application elle-même. La sortie du journal dans le service d’application affichera traceId et spanId.
 
 ```bash
 2024-05-12 18:21:45.984  INFO [user-service,f515bcf46b607671e1182d5903a5d261,779f554008223b4c] 1 --- [nio-8080-exec-1] c.tracing.service.users.UserController   : Creating new report for user: 1
@@ -72,3 +71,12 @@ L'exportateur du collecteur est configuré pour transmettra ses données à Jaeg
 Jeager qui interprète le standard otel. Ensuite, Jeager représente visuellement le chemin complet d'une requête associé à un scénario tulisateur.
 
 ![jaeger](images/jaeger.png "jaeger")
+
+## Déploiement
+
+```bash
+git clone https://github.com/chvois1/otel-spring.git
+cd otel-spring 
+mvn compile
+docker compose up
+```
