@@ -26,8 +26,8 @@ services:
   user-service:
     image: user-service:0.0.1-SNAPSHOT
     build:
-      #context: user-service
-      dockerfile: ../tracing-user/src/main/docker/Dockerfile
+      context: ../tracing-user
+      dockerfile: ../tracing-user/Dockerfile
     ports:
       - "8080:8080"
     depends_on:
@@ -37,8 +37,8 @@ services:
   report-service:
     image: report-service:0.0.1-SNAPSHOT
     build:
-      #context: report-service
-      dockerfile: ../tracing-report/src/main/docker/Dockerfile
+      context: ../tracing-report
+      dockerfile: ../tracing-report/Dockerfile
     ports:
       - "8081:8080"
     depends_on:
@@ -48,8 +48,8 @@ services:
   email-service:
     image: email-service:0.0.1-SNAPSHOT
     build:
-      #context: email-service
-      dockerfile: ../tracing-email/src/main/docker/Dockerfile
+      context: ../tracing-email
+      dockerfile: ../tracing-email/Dockerfile
     ports:
       - "8082:8080"
     depends_on:

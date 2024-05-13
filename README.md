@@ -78,5 +78,6 @@ Jeager qui interprète le standard otel. Ensuite, Jeager représente visuellemen
 git clone https://github.com/chvois1/otel-spring.git
 cd otel-spring 
 mvn compile
+mvn package
 docker compose up
 ```
