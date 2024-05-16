@@ -1,4 +1,4 @@
-package com.tracing.service.users;
+package com.tracing.service.users.clients;
 
 import com.tracing.report.Report;
 import org.json.JSONObject;
