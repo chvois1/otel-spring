@@ -1,8 +1,8 @@
-package com.tracing.service.reports;
+package com.tracing.service.reports.exceptions;
 
-class ReportNotFoundException extends RuntimeException {
+public class ReportNotFoundException extends RuntimeException {
 
-    ReportNotFoundException(Long id) {
+    public ReportNotFoundException(Long id) {
         super("Could not find report " + id);
     }
 }

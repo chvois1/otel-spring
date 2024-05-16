@@ -1,6 +1,5 @@
-package com.tracing.service.emails;
+package com.tracing.service.emails.exceptions;
 
-import com.tracing.service.emails.EmailNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

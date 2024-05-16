@@ -1,4 +1,4 @@
-package com.tracing.service.users;
+package com.tracing.service.users.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
