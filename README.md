@@ -6,7 +6,7 @@ Une architecture EDA repose sur un système distribué dont il faut observer le 
 
 ## OpenTelemetry
 
-OpenTelemetry une norme récente pour mettre en place la télémétrie (métriques, journaux et traces) dans des applications selon une démarche standardisée.
+OpenTelemetry est une norme récente pour mettre en place la télémétrie (métriques, journaux et traces) dans des applications selon une démarche standardisée.
 OpenTelemetry est un standard indépendant des fournisseurs existants de solutions télémétriques. Les données otel sont exportées vers vers ces fournisseurs qui interprétent ce nouveau standard.
 
 OpenTelemetry propose des SDK pour plusieurs langages et bibliothèques. Spring Boot utilise spring-cloud-starter-sleuth-otel.
@@ -51,7 +51,7 @@ Le collecteur de traces otel est une chaîne de composants configurables:
 
 récepteurs -> traitement -> exporteur
 
-![collecteur otel](images/otel-collector.svg "Collecteur otel")
+![collecteur otel](images/otel.png "Collecteur otel")
 
 ## Résultats
 
@@ -74,10 +74,21 @@ Jeager qui interprète le standard otel. Ensuite, Jeager représente visuellemen
 
 ## Déploiement
 
+![network](images/network.png "network overview")
+
 ```bash
 git clone https://github.com/chvois1/otel-spring.git
 cd otel-spring 
 mvn compile
 mvn package
 docker compose up
+```
+
+## Démonstration
+
+```bash
+cd docker-compose 
+start.sh
+docker compose up user-service
+doit.sh
 ```

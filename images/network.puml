@@ -1,0 +1,64 @@
+@startuml network
+
+
+title Traçage distribué
+
+skin rose
+
+actor "User" as user
+actor "Admin" as adm
+
+interface "http:8080" as IUserService
+package "user-service" as userService #LightCoral {
+    rectangle "Spring Boot" as spbUser
+    rectangle "Spring-otel" as otelUser
+}
+
+interface "https:8082" as IReportService
+rectangle "report-service" as reportService #LightCyan {
+    rectangle "Spring Boot" as spbReport
+    rectangle "Spring-otel" as otelReport
+}
+
+interface "http:8081" as IEmailService
+rectangle "email-service" as emailService #LightBlue {
+    rectangle "Spring Boot" as spbEmail
+    rectangle "Spring-otel" as otelEmail
+}
+
+rectangle "Kafka" as kafka {
+}
+
+rectangle "sleuth\nOtel collector" as otelCol #PaleVioletRed {
+}
+
+interface "http:16686" as IJaeger
+rectangle "jaeger" as jaeger #PaleGreen {
+}
+
+user ..( IUserService
+IUserService -- spbUser
+user ..( IReportService
+IReportService -- spbReport
+user ..( IEmailService
+IEmailService -- spbEmail
+
+spbUser - spbReport
+spbUser --> otelUser
+otelUser <-- otelCol
+spbReport --> kafka
+spbReport --> otelReport
+otelReport <-- otelCol
+kafka <-- spbEmail
+spbEmail --> otelEmail
+otelCol --> otelEmail
+otelCol <-- jaeger 
+adm ..( IJaeger 
+IJaeger - jaeger
+
+legend
+  OTLP: this is the OpenTelemetry Protocol, which allows to export telemetry data 
+  in the OLTP format to an OpenTelemetry Collector and OTLP-compliant receivers.
+end legend
+
+@enduml
