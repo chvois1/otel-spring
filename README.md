@@ -53,25 +53,6 @@ récepteurs -> traitement -> exporteur
 
 ![collecteur otel](images/otel.png "Collecteur otel")
 
-## Résultats
-
-Pour analyser les logs et les traces, il est possible de consulter la sortie standard de l'application elle-même. La sortie du journal dans le service d’application affichera traceId et spanId.
-
-```bash
-2024-05-12 18:21:45.984  INFO [user-service,f515bcf46b607671e1182d5903a5d261,779f554008223b4c] 1 --- [nio-8080-exec-1] c.tracing.service.users.UserController   : Creating new report for user: 1
-```
-
-Lorsque la demande initiale transite vers le service de reproting, les journaux du reproting conservent la trace initiale.
-
-```bash
-2024-05-12 18:21:46.617  INFO [report-service,f515bcf46b607671e1182d5903a5d261,75dc1c69c94bf0f2] 1 --- [nio-8080-exec-1] c.t.service.reports.ReportController     : Creating new report: 1
-```
-
-L'exportateur du collecteur est configuré pour transmettra ses données à Jaeger
-Jeager qui interprète le standard otel. Ensuite, Jeager représente visuellement le chemin complet d'une requête associé à un scénario tulisateur.
-
-![jaeger](images/jaeger.png "jaeger")
-
 ## Déploiement
 
 ![network](images/network.png "network overview")
@@ -92,3 +73,22 @@ start.sh
 docker compose up user-service
 doit.sh
 ```
+
+## Résultats
+
+Pour analyser les logs et les traces, il est possible de consulter la sortie standard de l'application elle-même. La sortie du journal dans le service d’application affichera traceId et spanId.
+
+```bash
+2024-05-12 18:21:45.984  INFO [user-service,f515bcf46b607671e1182d5903a5d261,779f554008223b4c] 1 --- [nio-8080-exec-1] c.tracing.service.users.UserController   : Creating new report for user: 1
+```
+
+Lorsque la demande initiale transite vers le service de reproting, les journaux du reproting conservent la trace initiale.
+
+```bash
+2024-05-12 18:21:46.617  INFO [report-service,f515bcf46b607671e1182d5903a5d261,75dc1c69c94bf0f2] 1 --- [nio-8080-exec-1] c.t.service.reports.ReportController     : Creating new report: 1
+```
+
+L'exportateur du collecteur est configuré pour transmettra ses données à Jaeger qui interprète le standard otel. Ensuite, Jeager représente visuellement le chemin complet d'une requête associé à un scénario tulisateur.
+
+
+![jaeger screenshot](images/jaeger-screen-shot.png "jaeger screenshot")
