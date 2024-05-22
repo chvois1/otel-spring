@@ -65,6 +65,66 @@ mvn package
 docker compose up
 ```
 
+### Configuration
+
+Comme les applications Java sont configurables via les propriétés et la configuration des fichiers YAML, l'otel-starter peut être modifié dans le fichier application.yaml. La propriété spring.sleuth.otel.config.trace-id-ratio-based définit la probabilité d'exportation de traces à 100 % (Mapping [0.0, 1.0] -> [0, 100] %).
+
+Si le ratio est inférieur à 1,0, alors certaines traces ne seront pas exportées.
+
+otel-spring/tracing-user/src/main/resources/application.yaml
+
+```yaml
+server:
+  port: 8080
+services:
+  report:
+    url: http://report-service:8080
+  email:
+    url: http://email-service:8080
+
+spring:
+  application:
+    name: user-service
+  sleuth:
+    otel:
+      config:
+        trace-id-ratio-based: 1.0
+      exporter:
+        otlp:
+          endpoint: http://sleuth:4317
+```
+
+### Définition des traces
+
+Toutes les requêtes sont créées à l'aide de RestTemplate.
+Spring ajoute des en-têtes de trace aux requêtes et le service de réception sait comment les analyser.
+
+tracing-user/src/main/java/com/tracing/service/users/clients/ReportClient.java
+
+```java
+public class ReportClient {
+    private final RestTemplate restTemplate;
+    @Value("${services.report.url}")
+    private String reportURL;
+    public ReportClient(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
+
+    public Report postReportForCustomerId(Long id) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        JSONObject reportJsonObject = new JSONObject();
+        reportJsonObject.put("id", id);
+        reportJsonObject.put("report", "This new generated report.");
+
+        HttpEntity<String> request = new HttpEntity<String>(reportJsonObject.toString(), headers);
+
+        return restTemplate.postForObject(this.reportURL + "/reports", request, Report.class);
+    }
+}
+```
+
 ## Démonstration
 
 ```bash
@@ -90,5 +150,11 @@ Lorsque la demande initiale transite vers le service de reproting, les journaux 
 
 L'exportateur du collecteur est configuré pour transmettra ses données à Jaeger qui interprète le standard otel. Ensuite, Jeager représente visuellement le chemin complet d'une requête associé à un scénario tulisateur.
 
+![jaeger screenshot](images/jaeger-timeline.png "jaeger screenshot")
 
-![jaeger screenshot](images/jaeger-screen-shot.png "jaeger screenshot")
+![jaeger screenshot](images/Jager-graph.png "jaeger screenshot")
+
+### Références
+
+[Otel-InfluxDB-Jeager-Grafana](
+https://www.influxdata.com/blog/opentelemetry-tutorial-collect-traces-logs-metrics-influxdb-3-0-jaeger-grafana/)
