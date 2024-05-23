@@ -38,10 +38,8 @@ rectangle "jaeger" as jaeger #PaleGreen {
 
 user ..( IUserService
 IUserService -- spbUser
-user ..( IReportService
 IReportService -- spbReport
-user ..( IEmailService
-IEmailService -- spbEmail
+spbEmail - IEmailService 
 
 spbUser - spbReport
 spbUser --> otelUser
@@ -53,8 +51,8 @@ kafka <-- spbEmail
 spbEmail --> otelEmail
 otelCol --> otelEmail
 otelCol <-- jaeger 
-adm ..( IJaeger 
-IJaeger - jaeger
+IJaeger - jaeger 
+adm -( IJaeger 
 
 legend
   OTLP: this is the OpenTelemetry Protocol, which allows to export telemetry data 
