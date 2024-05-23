@@ -57,15 +57,7 @@ récepteurs -> traitement -> exporteur
 
 ![network](images/network.png "network overview")
 
-```bash
-git clone https://github.com/chvois1/otel-spring.git
-cd otel-spring 
-mvn compile
-mvn package
-docker compose up
-```
-
-### Configuration
+## Configuration
 
 Comme les applications Java sont configurables via les propriétés et la configuration des fichiers YAML, l'otel-starter peut être modifié dans le fichier application.yaml. La propriété spring.sleuth.otel.config.trace-id-ratio-based définit la probabilité d'exportation de traces à 100 % (Mapping [0.0, 1.0] -> [0, 100] %).
 
@@ -127,14 +119,50 @@ public class ReportClient {
 
 ## Démonstration
 
+### Pré-requis
+
+Git et Maven.
+
+### Installation
+
+Cloner le projet git et fabriquer les paquets.
+
+```bash
+git clone https://github.com/chvois1/otel-spring.git
+cd otel-spring 
+mvn compile
+mvn package
+```
+
+### Services applicatifs
+
+Dans une fenêtre de commande lancer les services applicatifs et les services de supervisison.
+
+```bash
+cd docker-compose 
+start.sh
+```
+
+### Service utilisateur
+
+Dans une fenêtre de commande lancer le service utilisateur.
+
 ```bash
 cd docker-compose 
 start.sh
 docker compose up user-service
+```
+
+### Tests
+
+Dans une fenêtre de commande lancer les scripts curl qui interrogent les API Wed du service utilisateur.
+
+```bash
+cd docker-compose 
 doit.sh
 ```
 
-## Résultats
+### Résultats
 
 Pour analyser les logs et les traces, il est possible de consulter la sortie standard de l'application elle-même. La sortie du journal dans le service d’application affichera traceId et spanId.
 
@@ -154,7 +182,7 @@ L'exportateur du collecteur est configuré pour transmettra ses données à Jaeg
 
 ![jaeger screenshot](images/Jager-graph.png "jaeger screenshot")
 
-### Références
+## Références
 
 [Otel-InfluxDB-Jeager-Grafana](
 https://www.influxdata.com/blog/opentelemetry-tutorial-collect-traces-logs-metrics-influxdb-3-0-jaeger-grafana/)
