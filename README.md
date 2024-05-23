@@ -2,7 +2,7 @@
 
 ## Traces distribuées
 
-Une [architecture EDA](https://learn.microsoft.com/fr-fr/azure/architecture/guide/architecture-styles/event-driven) repose sur un système distribué dont il faut observer le comportement ([observabilité](https://newrelic.com/fr/resources/ebooks/what-is-observability)). En plus des logs et des métriques (Key Performance Indicator ou KPI), la supervision doit proposer un traçage distribué qui permet de suivre la progression d'une requêtes à l'intérieur du système.
+Une [architecture EDA](https://learn.microsoft.com/fr-fr/azure/architecture/guide/architecture-styles/event-driven) repose sur un système distribué dont il faut observer le comportement ([observabilité](https://newrelic.com/fr/resources/ebooks/what-is-observability)). En plus des logs et des métriques (Key Performance Indicator ou KPI), la supervision doit proposer un traçage distribué qui permet de suivre la progression d'une requête à l'intérieur du système.
 
 ## OpenTelemetry
 
@@ -13,9 +13,9 @@ OpenTelemetry est un standard indépendant des fournisseurs existants de solutio
 
 Le traçage identifie de manière unique toute requête émise dans un système distribué que ce soit à travers HTTP/S, mais également vers un système de messagerie comme kafka.
 
-Les trois composants du traçage sont le Span, le SpanContext et la Trace.
+Les trois composants du traçage sont le *Span*, le *SpanContext* et la *Trace*.
 
-- Le span est le principal élément constitutif d'une trace distribuée. Il représentant une unité de travail individuelle effectuée dans un système distribué.
+- Le span est le principal élément constitutif d'une trace distribuée. Il représente une unité de travail individuelle effectuée dans un système distribué.
 - Le SpanContext transporte les données au-delà des limites d'un processus.
 - La trace est une collection de Spans avec la même racine.
 
@@ -37,7 +37,7 @@ L'infrastructure est la suivante:
 
 - Un collecteur otel gère les entrées de spring-otel-exporter, les transforme et envoie le résultat à Jaeger.
 - Jaeger s'utilise à la fois pour stocker et visualiser les traces.
-- zookeeper s'utilisé pour gérer et coordonner les brokers Kafka. Il élit le broker leader du cluster.
+- zookeeper s'utilise pour gérer et coordonner les brokers Kafka. Il élit le broker leader du cluster.
 - kafka est le broker de messages utilisé dans cette architecture.
 
 Le collecteur de traces otel est une chaîne de composants configurables:
@@ -54,9 +54,9 @@ récepteur -> traitement -> exporteur
 
 Spring Boot utilise [spring-cloud-starter-sleuth-otel](https://spring-projects-experimental.github.io/spring-cloud-sleuth-otel/docs/current/reference/html/project-features.html).
 
-Le comportement d'une application Java se définit à l'aide de propriétés contenues dans un fichier de configuration YAML. Le comportement de  l'otel-starter est défini dans un fichier de configuration nommé *application.yaml*. La propriété *spring.sleuth.otel.config.trace-id-ratio-based* définit la probabilité d'exportation de traces à 100 % (Mapping [0.0, 1.0] -> [0, 100] %).
+Le comportement d'une application Java se définit à l'aide de propriétés contenues dans un fichier de configuration YAML. Le comportement de  l'otel-starter est défini dans un fichier de configuration nommé *application.yaml*. La propriété *spring.sleuth.otel.config.trace-id-ratio-based* définit la probabilité d'exportation de traces à: 100 % (Mapping [0.0, 1.0] -> [0, 100] %).
 
-Si le ratio est inférieur à 1,0, alors certaines traces ne seront pas exportées.
+Si le ratio est inférieur à 1.0, alors certaines traces ne seront pas exportées.
 
 Ci-dessous, un extrait du fichier *otel-spring/tracing-user/src/main/resources/application.yaml*.
 
@@ -83,7 +83,7 @@ spring:
 
 ### Définition des traces
 
-Toutes les requêtes sont créées à l'aide de [RestTemplate](https://www.baeldung.com/rest-template). Dans notre exemple, Java Spring ajoute des en-têtes de trace aux requêtes vers le services *user-service* et le service de réception nommé *report-service* sait comment le analyser le contenu de ces traces.
+Toutes les requêtes sont créées à l'aide de [RestTemplate](https://www.baeldung.com/rest-template). Dans notre exemple, Java Spring ajoute des en-têtes de trace aux requêtes vers le services *user-service* et le service de réception nommé *report-service* sait comment analyser le contenu de ces traces.
 
 Ci-dessous, un extrait du fichier *tracing-user/src/main/java/com/tracing/service/users/clients/ReportClient.java*
 
