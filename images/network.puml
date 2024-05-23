@@ -56,7 +56,7 @@ adm -( IJaeger
 
 legend
   OTLP: this is the OpenTelemetry Protocol, which allows to export telemetry data 
-  in the OLTP format to an OpenTelemetry Collector and OTLP-compliant receivers.
+  in the OTLP format to an OpenTelemetry Collector and OTLP-compliant receivers.
 end legend
 
 @enduml

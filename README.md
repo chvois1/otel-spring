@@ -31,7 +31,7 @@ On distingue 3 types de services:
 - Un service de reporting qui expose une API HTTP au service utilisateur et qui utilise un producteur Kafka pour créer des événements.
 - Un service de messagerie qui consomme les événements kafka produits par le services de reporting.
 
-L'objectif est de suivre toute demande émise dans le système: depuis le service utilisateur, jusqu'au service de messagerie. Dans cet exemple, l'architecture est simplifiée avec un nombre de services limité. Les avantages de cette architecture apparaissent lorsque le monbre des services impliqués dans un scénario utlisateur augmente.
+L'objectif est de suivre toute demande émise dans le système: depuis le service utilisateur, jusqu'au service de messagerie. Dans cet exemple, l'architecture est simplifiée avec un nombre de services limité. Les avantages de cette architecture apparaissent lorsque le nombre des services impliqués dans un scénario utlisateur augmente.
 
 L'infrastructure est la suivante:
 
